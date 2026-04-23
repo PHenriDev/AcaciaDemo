@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Acacia — Sistema de gestão para psicólogos. Gerencie pacientes, consultas e relatórios."/>
+<meta name="theme-color" content="#3D2B1F"/>
+<title>Acacia — Sistema para Psicólogos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-dots"></div>
+  <div class="login-box">
+    <img src="assets/logo.jpeg" style="width:200px;height:200px;object-fit:contain;margin-bottom:4px;mix-blend-mode:multiply;" alt="Acacia logo"/>
+    <div class="login-brand">Acacia</div>
+    <p class="login-sub">Sistema para Psicólogos</p>
+    <input type="text" id="lu" placeholder="Usuário" autocomplete="off" required/>
+    <input type="password" id="ls" placeholder="Chave de acesso" required/>
+    <button class="login-btn" onclick="login()">Entrar</button>
+    <p class="login-erro" id="le">Usuário ou chave incorretos.</p>
+    <p class="login-hint">Demo: admin / acacia2024</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- TOPBAR MOBILE -->
+  <div class="topbar-mobile">
+    <button class="hb" id="hb" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mob-brand">Acacia</div>
+    <div style="width:34px"></div>
+  </div>
+  <div class="mob-overlay" id="mob-overlay" onclick="fecharMenu()"></div>
+
+  <!-- BOTTOM NAV mobile -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="bn-item ativo" id="bn-dashboard" onclick="nav('dashboard')"><span class="bn-icon">◈</span>Dashboard</button>
+      <button class="bn-item" id="bn-pacientes" onclick="nav('pacientes')"><span class="bn-icon">◉</span>Pacientes</button>
+      <button class="bn-item" id="bn-agenda" onclick="nav('agenda')"><span class="bn-icon">◷</span>Agenda</button>
+      <button class="bn-item" id="bn-relatorios" onclick="nav('relatorios')"><span class="bn-icon">◫</span>Relatórios</button>
+    </div>
+  </nav>
+
+  <aside class="sidebar">
+    <div class="sb-head">
+      <img src="assets/logo.jpeg" style="width:52px;height:52px;object-fit:contain;background:white;border-radius:10px;padding:4px;flex-shrink:0;" alt="Acacia logo"/>
+      <div class="sb-brand">Acacia<small>Psicologia</small></div>
+    </div>
+    <nav class="nav">
+      <div class="nav-sec">Principal</div>
+      <div class="nav-item ativo" onclick="nav('dashboard')">◈ &nbsp;Dashboard</div>
+      <div class="nav-item" onclick="nav('pacientes')">◉ &nbsp;Pacientes</div>
+      <div class="nav-sec">Gestão</div>
+      <div class="nav-item" onclick="nav('agenda')">◷ &nbsp;Agenda</div>
+      <div class="nav-item" onclick="nav('relatorios')">◫ &nbsp;Relatórios</div>
+    </nav>
+    <div class="sb-foot">
+      <div class="logout" onclick="logout()">↩ &nbsp;Sair da sessão</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div class="page ativo" id="page-dashboard">
+      <div class="topbar">
+        <div><div class="ptit">Dashboard</div><div class="psub" id="data-hoje">Bem-vinda de volta, Dra. Ana · carregando...</div></div>
+        <button class="btn btn-ouro" onclick="abrirModal()">+ Novo Paciente</button>
+      </div>
+      <div class="sg">
+        <div class="sc"><div class="sl">Total de Pacientes</div><div class="sv">34</div><span class="badge b-marrom">Cadastrados</span></div>
+        <div class="sc"><div class="sl">Ativos</div><div class="sv">22</div><span class="badge b-verde">Em acompanhamento</span></div>
+        <div class="sc"><div class="sl">Inativos</div><div class="sv">7</div><span class="badge b-am">Sem agendamento</span></div>
+        <div class="sc"><div class="sl">Alta Concedida</div><div class="sv">5</div><span class="badge b-ouro">Tratamento concluído</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="card">
+          <div class="ch"><span class="ct">Consultas esta semana</span></div>
+          <div class="bw">
+            <div class="br"><span class="bl">Seg</span><div class="bt"><div class="bf" style="width:75%"></div></div><span class="bv">3</span></div>
+            <div class="br"><span class="bl">Ter</span><div class="bt"><div class="bf" style="width:100%"></div></div><span class="bv">4</span></div>
+            <div class="br"><span class="bl">Qua</span><div class="bt"><div class="bf" style="width:50%"></div></div><span class="bv">2</span></div>
+            <div class="br"><span class="bl">Qui</span><div class="bt"><div class="bf" style="width:75%"></div></div><span class="bv">3</span></div>
+            <div class="br"><span class="bl">Sex</span><div class="bt"><div class="bf" style="width:25%"></div></div><span class="bv">1</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Consultas de hoje</span></div>
+          <div class="pi2" style="display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-bottom:1px solid var(--borda);"><div><div class="pnm">Mariana Souza</div><div class="pif">Sessão 12 · TCC</div></div><div class="phr">14:00</div></div>
+          <div class="pi2" style="display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-bottom:1px solid var(--borda);"><div><div class="pnm">Carlos Mendes</div><div class="pif">Sessão 5 · Ansiedade</div></div><div class="phr">15:30</div></div>
+          <div class="pi2" style="display:flex;align-items:center;justify-content:space-between;padding:15px 20px;"><div><div class="pnm">Beatriz Lima</div><div class="pif">Sessão 8 · Avaliação</div></div><div class="phr">17:00</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACIENTES -->
+    <div class="page" id="page-pacientes">
+      <div class="topbar">
+        <div><div class="ptit">Pacientes</div><div class="psub" id="cp">34 pacientes cadastrados</div></div>
+        <button class="btn btn-ouro" onclick="abrirModal()">+ Novo Paciente</button>
+      </div>
+      <div class="card">
+        <div class="ch"><input class="si" type="text" placeholder="Buscar paciente..." oninput="filtrarT(this.value)" id="bi"/></div>
+        <div class="frow">
+          <button class="fb ativo" onclick="filtrarS('todos',this)">Todos (34)</button>
+          <button class="fb" onclick="filtrarS('Ativo',this)">Ativos (22)</button>
+          <button class="fb" onclick="filtrarS('Inativo',this)">Inativos (7)</button>
+          <button class="fb" onclick="filtrarS('Alta',this)">Alta (5)</button>
+          <button class="fb" onclick="filtrarS('Lista de espera',this)">Lista de espera (2)</button>
+        </div>
+        <table><thead><tr><th>Paciente</th><th>Status</th><th>Sessões</th><th>Última Consulta</th><th>Próxima Consulta</th><th></th></tr></thead>
+        <tbody id="tb"></tbody></table>
+      </div>
+    </div>
+
+    <!-- AGENDA -->
+    <div class="page" id="page-agenda">
+      <div class="topbar">
+        <div><div class="ptit">Agenda</div><div class="psub">Semana de 14 a 19 de abril · 2026</div></div>
+        <button class="btn btn-ouro" onclick="toast('Funcionalidade em breve!')">+ Agendar</button>
+      </div>
+      <div class="agrid">
+        <div class="card" style="padding:20px;">
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:10px;">
+            <div class="dh">SEG</div><div class="dh">TER</div><div class="dh">QUA</div><div class="dh">QUI</div><div class="dh">SEX</div><div class="dh">SÁB</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;">
+            <div><div class="dn">14</div><div class="ev"><div class="evh">09:00</div>Mariana S.</div><div class="ev cf"><div class="evh">11:00</div>João P.</div></div>
+            <div><div class="dn">15</div><div class="ev"><div class="evh">10:00</div>Ana C.</div><div class="ev"><div class="evh">14:00</div>Roberto M.</div><div class="ev cf"><div class="evh">16:00</div>Fernanda L.</div></div>
+            <div><div class="dn">16</div><div class="ev"><div class="evh">09:30</div>Carlos M.</div><div class="ev cx"><div class="evh">15:00</div>Beatriz L.</div></div>
+            <div><div class="dn">17</div><div class="ev"><div class="evh">10:00</div>Sofia R.</div><div class="ev"><div class="evh">13:00</div>Diego N.</div><div class="ev cf"><div class="evh">17:00</div>Laura M.</div></div>
+            <div><div class="dn hoje">18</div><div class="ev cf"><div class="evh">14:00</div>Mariana S.</div><div class="ev cf"><div class="evh">15:30</div>Carlos M.</div><div class="ev"><div class="evh">17:00</div>Beatriz L.</div></div>
+            <div><div class="dn">19</div><div class="ev"><div class="evh">10:00</div>Rodrigo A.</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="border-radius:14px 14px 0 0;border-bottom:none;padding:14px 18px;"><span class="ct">Próximas consultas</span></div>
+          <div class="pc" style="border-radius:0 0 14px 14px;border-top:1px solid var(--borda);">
+            <div class="pi2" style="display:flex;align-items:center;justify-content:space-between;"><div><div class="pnm">Mariana Souza</div><div class="pif">Hoje · Sessão 12</div></div><div class="phr">14:00</div></div>
+            <div class="pi2" style="display:flex;align-items:center;justify-content:space-between;"><div><div class="pnm">Carlos Mendes</div><div class="pif">Hoje · Sessão 5</div></div><div class="phr">15:30</div></div>
+            <div class="pi2" style="display:flex;align-items:center;justify-content:space-between;"><div><div class="pnm">Beatriz Lima</div><div class="pif">Hoje · Sessão 8</div></div><div class="phr">17:00</div></div>
+            <div class="pi2" style="display:flex;align-items:center;justify-content:space-between;"><div><div class="pnm">Rodrigo Alves</div><div class="pif">Sáb 19 · Sessão 3</div></div><div class="phr">10:00</div></div>
+            <div class="pi2" style="display:flex;align-items:center;justify-content:space-between;"><div><div class="pnm">Sofia Rocha</div><div class="pif">Seg 21 · Sessão 14</div></div><div class="phr">09:30</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RELATÓRIOS -->
+    <div class="page" id="page-relatorios">
+      <div class="topbar">
+        <div><div class="ptit">Relatórios</div><div class="psub">Visão geral · Abril 2026</div></div>
+        <button class="btn btn-out" onclick="toast('Exportando...')">⬇ Exportar PDF</button>
+      </div>
+      <div class="sg">
+        <div class="sc"><div class="sl">Consultas no mês</div><div class="sv">47</div><span class="badge b-verde">+8 vs mês anterior</span></div>
+        <div class="sc"><div class="sl">Taxa de presença</div><div class="sv">91%</div><span class="badge b-verde">Acima da média</span></div>
+        <div class="sc"><div class="sl">Cancelamentos</div><div class="sv">4</div><span class="badge b-am">8,5% do total</span></div>
+        <div class="sc"><div class="sl">Novos pacientes</div><div class="sv">3</div><span class="badge b-ouro">Este mês</span></div>
+      </div>
+      <div class="rgrid">
+        <div class="card">
+          <div class="ch"><span class="ct">Consultas por mês</span></div>
+          <div class="bw">
+            <div class="br"><span class="bl">Nov</span><div class="bt"><div class="bf" style="width:60%"></div></div><span class="bv">28</span></div>
+            <div class="br"><span class="bl">Dez</span><div class="bt"><div class="bf" style="width:49%"></div></div><span class="bv">23</span></div>
+            <div class="br"><span class="bl">Jan</span><div class="bt"><div class="bf" style="width:70%"></div></div><span class="bv">33</span></div>
+            <div class="br"><span class="bl">Fev</span><div class="bt"><div class="bf" style="width:64%"></div></div><span class="bv">30</span></div>
+            <div class="br"><span class="bl">Mar</span><div class="bt"><div class="bf" style="width:83%"></div></div><span class="bv">39</span></div>
+            <div class="br"><span class="bl">Abr</span><div class="bt"><div class="bf" style="width:100%"></div></div><span class="bv">47</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Distribuição por status</span></div>
+          <div class="dw" style="flex-direction:column;align-items:flex-start;">
+            <svg width="160" height="160" viewBox="0 0 200 160">
+              <circle cx="80" cy="80" r="52" fill="none" stroke="#EDE0C4" stroke-width="26"/>
+              <circle cx="80" cy="80" r="52" fill="none" stroke="#C49A3C" stroke-width="26" stroke-dasharray="203 124" stroke-dashoffset="0" transform="rotate(-90 80 80)"/>
+              <circle cx="80" cy="80" r="52" fill="none" stroke="#7A5C47" stroke-width="26" stroke-dasharray="64 263" stroke-dashoffset="-203" transform="rotate(-90 80 80)"/>
+              <circle cx="80" cy="80" r="52" fill="none" stroke="#D4AF5A" stroke-width="26" stroke-dasharray="46 281" stroke-dashoffset="-267" transform="rotate(-90 80 80)"/>
+              <text x="80" y="75" text-anchor="middle" font-size="24" font-family="Cormorant Garamond" font-weight="300" fill="#3D2B1F">34</text>
+              <text x="80" y="90" text-anchor="middle" font-size="10" font-family="Jost" fill="#7A6A5A" letter-spacing="1">pacientes</text>
+            </svg>
+            <div>
+              <div class="li"><div class="ld" style="background:#C49A3C"></div>Ativos — 22 (65%)</div>
+              <div class="li"><div class="ld" style="background:#7A5C47"></div>Inativos — 7 (21%)</div>
+              <div class="li"><div class="ld" style="background:#D4AF5A"></div>Alta — 5 (14%)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FICHA -->
+    <div class="page" id="page-ficha">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <button class="btn btn-out" onclick="nav('pacientes')" style="padding:9px 16px;">← Voltar</button>
+          <div class="ptit" id="ft"></div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-out" onclick="toast('Relatório gerado!')">Gerar Relatório</button>
+          <button class="btn btn-ouro" onclick="toast('Consulta agendada!')">+ Agendar</button>
+        </div>
+      </div>
+      <div class="card" id="fc"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="mo" id="mo">
+  <div class="md">
+    <div class="mt">Novo Paciente</div>
+    <div class="fr">
+      <div class="fg"><label>Nome completo</label><input type="text" id="fn" placeholder="Nome do paciente" required/></div>
+      <div class="fg"><label>Data de nascimento</label><input type="date" id="fna"/></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Telefone</label><input type="text" id="ft2" placeholder="(00) 00000-0000"/></div>
+      <div class="fg"><label>Email</label><input type="email" id="fe" placeholder="email@exemplo.com"/></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Status</label><select id="fs"><option value="Ativo">Ativo</option><option value="Lista de espera">Lista de espera</option><option value="Inativo">Inativo</option></select></div>
+      <div class="fg"><label>Abordagem</label><select id="fab"><option>Terapia Cognitivo-Comportamental</option><option>Psicanálise</option><option>Gestalt</option><option>Humanista</option><option>EMDR</option><option>Outro</option></select></div>
+    </div>
+    <div class="fg"><label>Queixa principal</label><textarea id="fq" rows="2" placeholder="Motivo do acompanhamento..."></textarea></div>
+    <div class="mbt">
+      <button class="btn btn-out" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-ouro" onclick="salvar()">Salvar Paciente</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="t"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
