@@ -1,3 +1,4 @@
+
 /* ═══════════════════════════════════════════════════
    ACACIA — app.js
    Versão expandida: login dual, portal paciente,
@@ -26,6 +27,24 @@ let P = [
   {id:12,nome:'Patrícia Santos',i:'PS',status:'Inativo',s:7,u:'15/01/2026',p:'—',a:'Humanista',tel:'(81) 98888-3333',em:'patricia@email.com',n:'28/10/1980',q:'Síndrome do pânico.',login:'patricia',senha:'pat123'},
   {id:13,nome:'Eduardo Costa',i:'EC',status:'Lista de espera',s:0,u:'—',p:'—',a:'A definir',tel:'(81) 98888-4444',em:'eduardo@email.com',n:'11/07/2001',q:'Dificuldades de concentração e TDAH.',login:'eduardo',senha:'edu123'},
   {id:14,nome:'Isabela Ferreira',i:'IF',status:'Alta',s:22,u:'20/02/2026',p:'—',a:'Psicanálise',tel:'(81) 98888-5555',em:'isabela@email.com',n:'16/09/1991',q:'Transtorno alimentar — alta concedida.',login:'isabela',senha:'isa123'},
+  
+const US={admin:'acacia00101',dra_ana:'ana123'};
+
+const P=[
+  {id:1,nome:'Mariana Souza',i:'MS',status:'Ativo',s:12,u:'12/04/2026',p:'18/04/2026 14:00',a:'TCC',tel:'(81) 99999-1111',em:'mariana@email.com',n:'15/03/1990',q:'Ansiedade generalizada e dificuldades no trabalho.'},
+  {id:2,nome:'Carlos Mendes',i:'CM',status:'Ativo',s:5,u:'10/04/2026',p:'18/04/2026 15:30',a:'Psicanálise',tel:'(81) 99999-2222',em:'carlos@email.com',n:'22/07/1985',q:'Depressão e isolamento social.'},
+  {id:3,nome:'Beatriz Lima',i:'BL',status:'Ativo',s:8,u:'09/04/2026',p:'18/04/2026 17:00',a:'Gestalt',tel:'(81) 99999-3333',em:'beatriz@email.com',n:'05/11/1995',q:'Transtorno de ansiedade e fobias.'},
+  {id:4,nome:'João Pedro',i:'JP',status:'Ativo',s:20,u:'14/04/2026',p:'21/04/2026 09:00',a:'TCC',tel:'(81) 99999-4444',em:'joao@email.com',n:'30/01/1988',q:'TOC e rituais compulsivos.'},
+  {id:5,nome:'Ana Clara',i:'AC',status:'Ativo',s:15,u:'15/04/2026',p:'22/04/2026 10:00',a:'Humanista',tel:'(81) 99999-5555',em:'anaclara@email.com',n:'18/06/1992',q:'Luto e dificuldades de relacionamento.'},
+  {id:6,nome:'Roberto Melo',i:'RM',status:'Inativo',s:3,u:'01/02/2026',p:'—',a:'TCC',tel:'(81) 99999-6666',em:'roberto@email.com',n:'12/09/1978',q:'Estresse ocupacional.'},
+  {id:7,nome:'Fernanda Lopes',i:'FL',status:'Ativo',s:9,u:'15/04/2026',p:'22/04/2026 16:00',a:'EMDR',tel:'(81) 99999-7777',em:'fernanda@email.com',n:'25/04/1993',q:'Trauma e PTSD.'},
+  {id:8,nome:'Sofia Rocha',i:'SR',status:'Ativo',s:14,u:'17/04/2026',p:'21/04/2026 09:30',a:'Psicanálise',tel:'(81) 99999-8888',em:'sofia@email.com',n:'07/12/1987',q:'Conflitos familiares e autoestima.'},
+  {id:9,nome:'Diego Neto',i:'DN',status:'Ativo',s:6,u:'17/04/2026',p:'24/04/2026 13:00',a:'TCC',tel:'(81) 99999-9999',em:'diego@email.com',n:'14/02/1996',q:'Fobia social e timidez excessiva.'},
+  {id:10,nome:'Laura Moura',i:'LM',status:'Alta',s:28,u:'10/03/2026',p:'—',a:'TCC',tel:'(81) 98888-1111',em:'laura@email.com',n:'03/08/1984',q:'Depressão — alta concedida.'},
+  {id:11,nome:'Rodrigo Alves',i:'RA',status:'Ativo',s:3,u:'05/04/2026',p:'19/04/2026 10:00',a:'Gestalt',tel:'(81) 98888-2222',em:'rodrigo@email.com',n:'19/05/1999',q:'Ansiedade universitária.'},
+  {id:12,nome:'Patrícia Santos',i:'PS',status:'Inativo',s:7,u:'15/01/2026',p:'—',a:'Humanista',tel:'(81) 98888-3333',em:'patricia@email.com',n:'28/10/1980',q:'Síndrome do pânico.'},
+  {id:13,nome:'Eduardo Costa',i:'EC',status:'Lista de espera',s:0,u:'—',p:'—',a:'A definir',tel:'(81) 98888-4444',em:'eduardo@email.com',n:'11/07/2001',q:'Dificuldades de concentração e TDAH.'},
+  {id:14,nome:'Isabela Ferreira',i:'IF',status:'Alta',s:22,u:'20/02/2026',p:'—',a:'Psicanálise',tel:'(81) 98888-5555',em:'isabela@email.com',n:'16/09/1991',q:'Transtorno alimentar — alta concedida.'},8
 ];
 
 /* ── LEMBRETES ── */
@@ -643,3 +662,7 @@ function fecharMenu(){
   render(P);
   atualizarStats();
 })();
+  document.getElementById('hb').classList.remove('open');
+  document.getElementById('mob-overlay').classList.remove('show');
+
+
