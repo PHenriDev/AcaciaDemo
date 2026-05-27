@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#3D2B1F"/>
 <title>Acacia — Sistema para Psicólogos</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
 
@@ -17,19 +17,24 @@
   <div class="login-box">
     <img src="assets/logo.jpeg" style="width:200px;height:200px;object-fit:contain;margin-bottom:4px;mix-blend-mode:multiply;" alt="Acacia logo"/>
     <div class="login-brand">Acacia</div>
-    <p class="login-sub">Sistema para Psicólogos</p>
+    <p class="login-sub" id="login-sub-text">Psicologia &amp; Cuidado</p>
+    <div class="login-type-toggle">
+      <button class="ltt-btn ativo" id="ltt-psi" onclick="setLoginTipo('psicologo')">Psicólogo</button>
+      <button class="ltt-btn" id="ltt-pac" onclick="setLoginTipo('paciente')">Paciente</button>
+    </div>
     <input type="text" id="lu" placeholder="Usuário" autocomplete="off" required/>
     <input type="password" id="ls" placeholder="Chave de acesso" required/>
     <button class="login-btn" onclick="login()">Entrar</button>
     <p class="login-erro" id="le">Usuário ou chave incorretos.</p>
-    <p class="login-hint">Demo: admin / acacia2026</p>
+    <p class="login-hint" id="login-hint-text">Demo psicólogo: admin / acacia2026</p>
   </div>
 </div>
 
-<!-- APP -->
-<div id="app">
+<!-- ═══════════════════════════════════════════
+     APP — PSICÓLOGO
+═══════════════════════════════════════════ -->
+<div id="app-psi" style="display:none;">
 
-  <!-- TOPBAR MOBILE -->
   <div class="topbar-mobile">
     <button class="hb" id="hb" onclick="toggleMenu()">
       <span></span><span></span><span></span>
@@ -39,13 +44,12 @@
   </div>
   <div class="mob-overlay" id="mob-overlay" onclick="fecharMenu()"></div>
 
-  <!-- BOTTOM NAV mobile -->
   <nav class="bottom-nav">
     <div class="bottom-nav-inner">
       <button class="bn-item ativo" id="bn-dashboard" onclick="nav('dashboard')"><span class="bn-icon">◈</span>Dashboard</button>
       <button class="bn-item" id="bn-pacientes" onclick="nav('pacientes')"><span class="bn-icon">◉</span>Pacientes</button>
       <button class="bn-item" id="bn-agenda" onclick="nav('agenda')"><span class="bn-icon">◷</span>Agenda</button>
-      <button class="bn-item" id="bn-relatorios" onclick="nav('relatorios')"><span class="bn-icon">◫</span>Relatórios</button>
+      <button class="bn-item" id="bn-crm" onclick="nav('crm')"><span class="bn-icon">◎</span>CRM</button>
     </div>
   </nav>
 
@@ -61,6 +65,7 @@
       <div class="nav-sec">Gestão</div>
       <div class="nav-item" onclick="nav('agenda')">◷ &nbsp;Agenda</div>
       <div class="nav-item" onclick="nav('relatorios')">◫ &nbsp;Relatórios</div>
+      <div class="nav-item" onclick="nav('crm')">◎ &nbsp;CRM</div>
     </nav>
     <div class="sb-foot">
       <div class="logout" onclick="logout()">↩ &nbsp;Sair da sessão</div>
@@ -72,14 +77,14 @@
     <!-- DASHBOARD -->
     <div class="page ativo" id="page-dashboard">
       <div class="topbar">
-        <div><div class="ptit">Dashboard</div><div class="psub" id="data-hoje">Bem-vinda de volta, Dra. Ana · carregando...</div></div>
+        <div><div class="ptit">Dashboard</div><div class="psub" id="data-hoje">carregando...</div></div>
         <button class="btn btn-ouro" onclick="abrirModal()">+ Novo Paciente</button>
       </div>
       <div class="sg">
-        <div class="sc"><div class="sl">Total de Pacientes</div><div class="sv">34</div><span class="badge b-marrom">Cadastrados</span></div>
-        <div class="sc"><div class="sl">Ativos</div><div class="sv">22</div><span class="badge b-verde">Em acompanhamento</span></div>
-        <div class="sc"><div class="sl">Inativos</div><div class="sv">7</div><span class="badge b-am">Sem agendamento</span></div>
-        <div class="sc"><div class="sl">Alta Concedida</div><div class="sv">5</div><span class="badge b-ouro">Tratamento concluído</span></div>
+        <div class="sc"><div class="sl">Total de Pacientes</div><div class="sv" id="stat-total">34</div><span class="badge b-marrom">Cadastrados</span></div>
+        <div class="sc"><div class="sl">Ativos</div><div class="sv" id="stat-ativos">22</div><span class="badge b-verde">Em acompanhamento</span></div>
+        <div class="sc"><div class="sl">Inativos</div><div class="sv" id="stat-inativos">7</div><span class="badge b-am">Sem agendamento</span></div>
+        <div class="sc"><div class="sl">Alta Concedida</div><div class="sv" id="stat-alta">5</div><span class="badge b-ouro">Tratamento concluído</span></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
         <div class="card">
@@ -104,17 +109,17 @@
     <!-- PACIENTES -->
     <div class="page" id="page-pacientes">
       <div class="topbar">
-        <div><div class="ptit">Pacientes</div><div class="psub" id="cp">34 pacientes cadastrados</div></div>
+        <div><div class="ptit">Pacientes</div><div class="psub" id="cp">carregando...</div></div>
         <button class="btn btn-ouro" onclick="abrirModal()">+ Novo Paciente</button>
       </div>
       <div class="card">
         <div class="ch"><input class="si" type="text" placeholder="Buscar paciente..." oninput="filtrarT(this.value)" id="bi"/></div>
-        <div class="frow">
-          <button class="fb ativo" onclick="filtrarS('todos',this)">Todos (34)</button>
-          <button class="fb" onclick="filtrarS('Ativo',this)">Ativos (22)</button>
-          <button class="fb" onclick="filtrarS('Inativo',this)">Inativos (7)</button>
-          <button class="fb" onclick="filtrarS('Alta',this)">Alta (5)</button>
-          <button class="fb" onclick="filtrarS('Lista de espera',this)">Lista de espera (2)</button>
+        <div class="frow" id="frow-filtros">
+          <button class="fb ativo" onclick="filtrarS('todos',this)">Todos</button>
+          <button class="fb" onclick="filtrarS('Ativo',this)">Ativos</button>
+          <button class="fb" onclick="filtrarS('Inativo',this)">Inativos</button>
+          <button class="fb" onclick="filtrarS('Alta',this)">Alta</button>
+          <button class="fb" onclick="filtrarS('Lista de espera',this)">Lista de espera</button>
         </div>
         <table><thead><tr><th>Paciente</th><th>Status</th><th>Sessões</th><th>Última Consulta</th><th>Próxima Consulta</th><th></th></tr></thead>
         <tbody id="tb"></tbody></table>
@@ -124,7 +129,7 @@
     <!-- AGENDA -->
     <div class="page" id="page-agenda">
       <div class="topbar">
-        <div><div class="ptit">Agenda</div><div class="psub">Semana de 14 a 19 de abril · 2026</div></div>
+        <div><div class="ptit">Agenda</div><div class="psub">Semana atual</div></div>
         <button class="btn btn-ouro" onclick="toast('Funcionalidade em breve!')">+ Agendar</button>
       </div>
       <div class="agrid">
@@ -199,6 +204,62 @@
       </div>
     </div>
 
+    <!-- CRM -->
+    <div class="page" id="page-crm">
+      <div class="topbar">
+        <div><div class="ptit">CRM — Relacionamento</div><div class="psub">Gestão de relacionamento com pacientes</div></div>
+        <button class="btn btn-ouro" onclick="abrirCrmModal()">+ Novo Registro</button>
+      </div>
+
+      <!-- CRM KANBAN -->
+      <div class="crm-kanban" id="crm-kanban">
+        <div class="crm-col" id="crm-col-contato">
+          <div class="crm-col-header">
+            <span class="crm-col-dot" style="background:#D4A017"></span>
+            <span class="crm-col-title">Primeiro Contato</span>
+            <span class="crm-col-count" id="count-contato">0</span>
+          </div>
+          <div class="crm-cards" id="cards-contato"></div>
+        </div>
+        <div class="crm-col" id="crm-col-avaliacao">
+          <div class="crm-col-header">
+            <span class="crm-col-dot" style="background:#7A9BD4"></span>
+            <span class="crm-col-title">Em Avaliação</span>
+            <span class="crm-col-count" id="count-avaliacao">0</span>
+          </div>
+          <div class="crm-cards" id="cards-avaliacao"></div>
+        </div>
+        <div class="crm-col" id="crm-col-ativo">
+          <div class="crm-col-header">
+            <span class="crm-col-dot" style="background:#5C7A4E"></span>
+            <span class="crm-col-title">Acompanhamento Ativo</span>
+            <span class="crm-col-count" id="count-ativo">0</span>
+          </div>
+          <div class="crm-cards" id="cards-ativo"></div>
+        </div>
+        <div class="crm-col" id="crm-col-alta">
+          <div class="crm-col-header">
+            <span class="crm-col-dot" style="background:#C49A3C"></span>
+            <span class="crm-col-title">Alta / Concluído</span>
+            <span class="crm-col-count" id="count-alta">0</span>
+          </div>
+          <div class="crm-cards" id="cards-alta"></div>
+        </div>
+      </div>
+
+      <!-- CRM TABELA DE ALERTAS -->
+      <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px;" id="crm-bottom">
+        <div class="card">
+          <div class="ch"><span class="ct">⚠ Alertas e Follow-ups</span></div>
+          <div id="crm-alertas-list" style="max-height:260px;overflow-y:auto;"></div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">📊 Resumo do Pipeline</span></div>
+          <div class="bw" id="crm-pipeline-chart"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- FICHA -->
     <div class="page" id="page-ficha">
       <div class="topbar">
@@ -217,7 +278,50 @@
   </main>
 </div>
 
-<!-- MODAL -->
+<!-- ═══════════════════════════════════════════
+     APP — PACIENTE
+═══════════════════════════════════════════ -->
+<div id="app-pac" style="display:none;">
+
+  <div class="pac-topbar">
+    <img src="assets/logo.jpeg" style="width:36px;height:36px;object-fit:contain;background:white;border-radius:8px;padding:3px;" alt="Acacia"/>
+    <div class="pac-topbar-brand">Acacia</div>
+    <button class="pac-logout-btn" onclick="logout()">Sair</button>
+  </div>
+
+  <div class="pac-main">
+
+    <!-- Cabeçalho boas-vindas -->
+    <div class="pac-hero">
+      <div class="pac-hero-avatar" id="pac-avatar">MS</div>
+      <div>
+        <div class="pac-hero-nome" id="pac-nome">Carregando...</div>
+        <div class="pac-hero-sub" id="pac-sub">Bem-vinda de volta</div>
+      </div>
+    </div>
+
+    <!-- Próxima consulta -->
+    <div class="pac-section-title">Próxima Consulta</div>
+    <div class="pac-consulta-card" id="pac-proxima">
+      <div class="pac-consulta-data" id="pac-consulta-data">—</div>
+      <div class="pac-consulta-info" id="pac-consulta-info">—</div>
+    </div>
+
+    <!-- Lembretes -->
+    <div class="pac-section-header">
+      <div class="pac-section-title">Lembretes da Psicóloga</div>
+      <span class="pac-lembrete-count" id="pac-lembrete-count">0 lembretes</span>
+    </div>
+    <div id="pac-lembretes-list"></div>
+
+    <!-- Histórico de sessões -->
+    <div class="pac-section-title" style="margin-top:28px;">Minhas Sessões</div>
+    <div class="pac-sessoes-grid" id="pac-sessoes"></div>
+
+  </div>
+</div>
+
+<!-- MODAL NOVO PACIENTE -->
 <div class="mo" id="mo">
   <div class="md">
     <div class="mt">Novo Paciente</div>
@@ -230,8 +334,16 @@
       <div class="fg"><label>Email</label><input type="email" id="fe" placeholder="email@exemplo.com"/></div>
     </div>
     <div class="fr">
-      <div class="fg"><label>Status</label><select id="fs"><option value="Ativo">Ativo</option><option value="Lista de espera">Lista de espera</option><option value="Inativo">Inativo</option></select></div>
-      <div class="fg"><label>Abordagem</label><select id="fab"><option>Terapia Cognitivo-Comportamental</option><option>Psicanálise</option><option>Gestalt</option><option>Humanista</option><option>EMDR</option><option>Outro</option></select></div>
+      <div class="fg"><label>Usuário (login paciente)</label><input type="text" id="fpac-user" placeholder="ex: mariana_s"/></div>
+      <div class="fg"><label>Senha (login paciente)</label><input type="password" id="fpac-pass" placeholder="Senha de acesso"/></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Status</label>
+        <select id="fs"><option value="Ativo">Ativo</option><option value="Lista de espera">Lista de espera</option><option value="Inativo">Inativo</option></select>
+      </div>
+      <div class="fg"><label>Abordagem</label>
+        <select id="fab"><option>TCC</option><option>Psicanálise</option><option>Gestalt</option><option>Humanista</option><option>EMDR</option><option>Outro</option></select>
+      </div>
     </div>
     <div class="fg"><label>Queixa principal</label><textarea id="fq" rows="2" placeholder="Motivo do acompanhamento..."></textarea></div>
     <div class="mbt">
@@ -241,8 +353,78 @@
   </div>
 </div>
 
-<div class="toast" id="t"></div>
+<!-- MODAL CRM -->
+<div class="mo" id="mo-crm">
+  <div class="md">
+    <div class="mt">Registro CRM</div>
+    <div class="fr">
+      <div class="fg"><label>Paciente</label>
+        <select id="crm-pac-sel"></select>
+      </div>
+      <div class="fg"><label>Estágio</label>
+        <select id="crm-estagio">
+          <option value="contato">Primeiro Contato</option>
+          <option value="avaliacao">Em Avaliação</option>
+          <option value="ativo">Acompanhamento Ativo</option>
+          <option value="alta">Alta / Concluído</option>
+        </select>
+      </div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Prioridade</label>
+        <select id="crm-prioridade">
+          <option value="normal">Normal</option>
+          <option value="alta">Alta</option>
+          <option value="urgente">Urgente</option>
+        </select>
+      </div>
+      <div class="fg"><label>Próximo follow-up</label>
+        <input type="date" id="crm-followup"/>
+      </div>
+    </div>
+    <div class="fg"><label>Objetivo terapêutico principal</label>
+      <input type="text" id="crm-objetivo" placeholder="Ex: Redução da ansiedade generalizada"/>
+    </div>
+    <div class="fg"><label>Observações internas (não visíveis ao paciente)</label>
+      <textarea id="crm-obs" rows="2" placeholder="Notas do psicólogo..."></textarea>
+    </div>
+    <div class="mbt">
+      <button class="btn btn-out" onclick="fecharCrmModal()">Cancelar</button>
+      <button class="btn btn-ouro" onclick="salvarCrm()">Salvar CRM</button>
+    </div>
+  </div>
+</div>
 
-  <script src="js/app.js"></script>
+<!-- MODAL LEMBRETE (psicólogo envia para paciente) -->
+<div class="mo" id="mo-lembrete">
+  <div class="md" style="max-width:460px;">
+    <div class="mt">Novo Lembrete</div>
+    <div class="fg"><label>Para</label>
+      <select id="lem-pac-sel"></select>
+    </div>
+    <div class="fg"><label>Tipo</label>
+      <select id="lem-tipo">
+        <option value="tarefa">📝 Tarefa terapêutica</option>
+        <option value="reflexao">💭 Reflexão</option>
+        <option value="consulta">📅 Lembrete de consulta</option>
+        <option value="pratica">🌿 Prática recomendada</option>
+        <option value="geral">📌 Geral</option>
+      </select>
+    </div>
+    <div class="fg"><label>Mensagem</label>
+      <textarea id="lem-texto" rows="3" placeholder="Escreva o lembrete para o paciente..."></textarea>
+    </div>
+    <div class="fg"><label>Data de validade (opcional)</label>
+      <input type="date" id="lem-validade"/>
+    </div>
+    <div class="mbt">
+      <button class="btn btn-out" onclick="fecharLembreteModal()">Cancelar</button>
+      <button class="btn btn-ouro" onclick="salvarLembrete()">Enviar Lembrete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="t"></div>
+<script src="js/app.js"></script>
 </body>
 </html>
